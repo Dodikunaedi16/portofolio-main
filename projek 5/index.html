@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WiFi Coverage & AP Optimization | Portfolio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+body{background:linear-gradient(180deg,#0b1220,#020617);color:#fff}
+.container{max-width:1200px;margin:auto;padding:80px 20px}
+
+/* ================= HERO ================= */
+.hero{min-height:90vh;display:flex;align-items:center}
+.hero-content{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}
+.hero-text h1{font-size:48px;line-height:1.2;margin-bottom:20px}
+.hero-text h1 span{color:#38bdf8}
+.hero-text p{color:#cbd5e1;margin-bottom:34px}
+.btn-primary{padding:14px 36px;border-radius:30px;background:linear-gradient(135deg,#38bdf8,#0ea5e9);color:#020617;font-weight:600;text-decoration:none}
+.hero-image img{width:100%;height:520px;object-fit:cover;border-radius:30px;box-shadow:0 40px 90px rgba(0,0,0,.7)}
+
+/* ================= PROJECT ================= */
+.project{padding:120px 0;text-align:center}
+.project h2{font-size:40px;margin-bottom:16px}
+.subtitle{color:#94a3b8;margin-bottom:60px}
+
+.project-diagram{
+  position:relative;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:40px;
+}
+
+/* DEVICE */
+.device{
+  width:160px;
+  background:#020617;
+  border:1px solid rgba(56,189,248,.35);
+  border-radius:20px;
+  padding:20px;
+  text-align:center;
+  z-index:2;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  transition:0.3s ease;
+}
+.device.glow{box-shadow:0 0 20px #38bdf8;transform:scale(1.05);}
+
+/* LINK */
+.link{
+  position:absolute;
+  background:linear-gradient(90deg,#38bdf8,transparent,#38bdf8);
+  background-size:200% 100%;
+  animation:flow 2.5s linear infinite;
+  z-index:1;
+}
+
+/* PACKET */
+.packet{
+  position:absolute;
+  width:10px;
+  height:10px;
+  background:#38bdf8;
+  border-radius:50%;
+  box-shadow:0 0 15px #38bdf8;
+  transform:translate(-50%,-50%);
+  z-index:3;
+}
+
+/* ================= SCOPE ================= */
+.scope{padding:120px 0;text-align:center}
+.scope h2{font-size:40px;margin-bottom:16px}
+
+.scope-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:30px;
+  margin-top:60px;
+}
+
+.scope-card{
+  display:flex;
+  gap:16px;
+  align-items:center;
+  background:#020617;
+  border:1px solid rgba(56,189,248,.3);
+  border-radius:20px;
+  padding:20px;
+  transition:0.35s ease;
+}
+.scope-card:hover{
+  transform: translateY(-6px);
+  box-shadow:0 15px 40px rgba(56,189,248,.35);
+}
+
+/* ICONS */
+.icon{width:50px;height:50px;position:relative;display:flex;align-items:center;justify-content:center;}
+.ap-icon{border:2px solid #38bdf8; border-radius:50%; box-shadow:0 0 10px #38bdf8;}
+.ap-icon::before{content:"";position:absolute;width:12px;height:12px;background:#38bdf8;border-radius:50%;}
+.ap-icon::after{content:"";position:absolute;width:30px;height:30px;border:2px dashed rgba(56,189,248,0.5);border-radius:50%;}
+.router-icon{width:50px;height:50px;background:#0ea5e9;border-radius:12px;box-shadow:0 0 15px #0ea5e9;}
+.client-icon{width:40px;height:40px;background:#38bdf8;border-radius:50%;box-shadow:0 0 10px #38bdf8;}
+.signal-icon{position:relative;width:40px;height:40px;}
+.signal-icon::before,.signal-icon::after{content:"";position:absolute;border:2px solid #38bdf8;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);}
+.signal-icon::before{width:20px;height:20px;}
+.signal-icon::after{width:30px;height:30px;border-style:solid;opacity:0.6;}
+
+/* FOOTER */
+footer{text-align:center;padding:30px;color:#94a3b8}
+
+/* ================= MOBILE ================= */
+@media(max-width:900px){
+  .hero-content{grid-template-columns:1fr;text-align:center}
+  .project-diagram{flex-direction:column}
+  .device{width:220px}
+  .scope-grid{grid-template-columns:1fr}
+}
+
+/* FLOW */
+@keyframes flow{from{background-position:0 0}to{background-position:200% 0}}
+/* ================= ANIMASI OPENING ================= */
+.hero, .project, .scope {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+.hero.show, .project.show, .scope.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hero image zoom */
+.hero-image img {
+  transform: scale(0.9);
+  transition: transform 1s ease;
+}
+.hero-image.show img {
+  transform: scale(1);
+}
+
+/* Device initial pulse */
+.device {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.device.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Packet initial fade */
+.packet {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.packet.show {
+  opacity: 1;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-text">
+      <h1>WiFi Coverage &<br><span>Access Point Optimization</span></h1>
+      <p>Pengaturan dan optimasi jaringan WiFi pada ruang kerja, termasuk penempatan access point, konfigurasi keamanan, dan pengujian stabilitas sinyal.</p>
+      <a href="#project" class="btn-primary">View Project</a>
+    </div>
+    <div class="hero-image">
+      <img src="images/image.png" alt="WiFi Project">
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT -->
+<section id="project" class="project">
+  <h2>WiFi Network Topology</h2>
+  <p class="subtitle">Diagram topologi jaringan WiFi dan penempatan Access Point.</p>
+
+  <div class="project-diagram topology-diagram">
+    <!-- Links -->
+    <div class="link"></div>
+    <div class="link"></div>
+    <div class="link"></div>
+
+    <!-- Devices -->
+    <div class="device" id="ap1"><div class="icon ap-icon"></div><span>AP 1</span></div>
+    <div class="device" id="ap2"><div class="icon ap-icon"></div><span>AP 2</span></div>
+    <div class="device" id="router"><div class="icon router-icon"></div><span>Router</span></div>
+    <div class="device" id="client"><div class="icon client-icon"></div><span>Client</span></div>
+
+    <!-- Packets -->
+    <div class="packet"></div>
+    <div class="packet"></div>
+  </div>
+</section>
+
+<!-- SCOPE -->
+<style>
+/* ICONS SCOPE CUSTOM */
+.scope-card .icon {
+  width: 50px;
+  height: 50px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* AP ICON */
+.ap-icon {
+  border: 2px solid #38bdf8;
+  border-radius: 50%;
+  position: relative;
+  animation: pulse 2s infinite;
+}
+.ap-icon::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  background: #38bdf8;
+  border-radius: 50%;
+  position: absolute;
+}
+.ap-icon::after {
+  content: "";
+  width: 30px;
+  height: 30px;
+  border: 2px dashed rgba(56,189,248,0.5);
+  border-radius: 50%;
+  position: absolute;
+}
+
+/* SIGNAL ICON */
+.signal-icon {
+  width: 50px;
+  height: 50px;
+  position: relative;
+}
+.signal-icon::before, .signal-icon::after, .signal-icon div {
+  content: "";
+  position: absolute;
+  border: 2px solid #38bdf8;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.signal-icon::before { width: 15px; height: 15px; }
+.signal-icon::after { width: 25px; height: 25px; opacity: 0.6; }
+.signal-icon div { width: 35px; height: 35px; opacity: 0.3; }
+
+/* NETWORK CONFIG ICON */
+.network-icon {
+  width: 50px; height: 50px;
+  background: #0ea5e9;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.network-icon::before {
+  content: "";
+  width: 20px; height: 20px;
+  border: 2px solid #fff;
+  border-radius: 4px;
+}
+
+/* MONITORING ICON */
+.monitor-icon {
+  width: 50px; height: 50px;
+  border: 2px solid #38bdf8;
+  border-radius: 50%;
+  position: relative;
+}
+.monitor-icon::before {
+  content: "";
+  position: absolute;
+  width: 12px; height: 12px;
+  background: #38bdf8;
+  border-radius: 50%;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* DOCUMENTATION ICON */
+.doc-icon {
+  width: 50px; height: 50px;
+  border: 2px solid #38bdf8;
+  border-radius: 6px;
+  position: relative;
+}
+.doc-icon::before {
+  content: "";
+  width: 30px; height: 30px;
+  background: #38bdf8;
+  opacity: 0.2;
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* AWARENESS ICON */
+.awareness-icon {
+  width: 50px; height: 50px;
+  border: 2px solid #38bdf8;
+  border-radius: 50%;
+  position: relative;
+}
+.awareness-icon::before {
+  content: "";
+  width: 20px; height: 20px;
+  background: #38bdf8;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* PULSE ANIMATION */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.6; }
+}
+</style>
+
+<!-- UPDATE HTML ICONS -->
+<div class="scope-grid">
+  <div class="scope-card"><div class="icon ap-icon"></div><div><h3>AP Placement</h3><p>Penempatan access point optimal untuk cakupan terbaik.</p></div></div>
+  <div class="scope-card"><div class="icon signal-icon"><div></div></div><div><h3>Signal Optimization</h3><p>Optimasi kekuatan dan stabilitas sinyal WiFi.</p></div></div>
+  <div class="scope-card"><div class="icon network-icon"></div><div><h3>Network Config</h3><p>Konfigurasi keamanan dan jaringan WiFi.</p></div></div>
+  <div class="scope-card"><div class="icon monitor-icon"></div><div><h3>Monitoring</h3><p>Pemantauan performa jaringan dan sinyal.</p></div></div>
+  <div class="scope-card"><div class="icon doc-icon"></div><div><h3>Documentation</h3><p>Pembuatan laporan dan dokumentasi jaringan.</p></div></div>
+  <div class="scope-card"><div class="icon awareness-icon"></div><div><h3>Awareness</h3><p>Pelatihan penggunaan WiFi untuk staf.</p></div></div>
+</div>
+
+</div>
+<footer>© 2025 WiFi Network Portfolio</footer>
+
+<script>
+const diagram = document.querySelector(".topology-diagram");
+const devices = [...document.querySelectorAll(".device")];
+const links = document.querySelectorAll(".link");
+const packets = document.querySelectorAll(".packet");
+
+function center(el){return {x: el.offsetLeft + el.offsetWidth/2, y: el.offsetTop + el.offsetHeight/2};}
+
+/* LINKS */
+function updateLinks(){
+  const mobile = window.innerWidth <= 900;
+  links.forEach((l,i)=>{
+    const a = devices[i];
+    const b = devices[i+1];
+    if(!a||!b) return;
+    const A = center(a);
+    const B = center(b);
+    if(mobile){
+      l.style.left = "50%";
+      l.style.top  = A.y+"px";
+      l.style.width = "2px";
+      l.style.height = (B.y-A.y)+"px";
+      l.style.transform = "translateX(-50%)";
+    }else{
+      l.style.left = A.x+"px";
+      l.style.top  = A.y+"px";
+      l.style.width = (B.x-A.x)+"px";
+      l.style.height = "2px";
+      l.style.transform = "none";
+    }
+  });
+}
+
+/* PACKET ANIMATION */
+function animatePackets(){
+  packets.forEach((packet,index)=>{
+    let seg = index===0?0:devices.length-2;
+    let dir = index===0?1:-1;
+    let t = 0;
+    const speed = 0.008;
+    function move(){
+      const A = center(devices[seg]);
+      const B = center(devices[seg+dir]);
+      if(!B) return;
+      let x = window.innerWidth<=900? diagram.offsetWidth/2 : A.x + (B.x-A.x)*t;
+      let y = window.innerWidth<=900? A.y + (B.y-A.y)*t : A.y;
+      packet.style.left = x+"px";
+      packet.style.top = y+"px";
+      packet.style.transform = "translate(-50%,-50%)";
+      // Glow
+      devices.forEach(d=>d.classList.remove("glow"));
+      if(t>=1) devices[seg+dir]?.classList.add("glow");
+      t+=speed;
+      if(t>=1){ t=0; seg+=dir; if(seg>=devices.length-1||seg<=0) dir*=-1; }
+      requestAnimationFrame(move);
+    }
+    move();
+  });
+}
+
+window.addEventListener("load", ()=>{updateLinks(); animatePackets();});
+window.addEventListener("resize", updateLinks);
+// ===== Animasi Opening =====
+window.addEventListener("load", ()=>{
+  // Delay tiap section
+  const hero = document.querySelector(".hero");
+  const project = document.querySelector(".project");
+  const scope = document.querySelector(".scope");
+  const devicesEl = document.querySelectorAll(".device");
+  const packetsEl = document.querySelectorAll(".packet");
+  const heroImg = document.querySelector(".hero-image");
+
+  setTimeout(()=>{ hero.classList.add("show"); heroImg.classList.add("show"); }, 200);
+  setTimeout(()=>{ project.classList.add("show"); }, 700);
+  setTimeout(()=>{ scope.classList.add("show"); }, 1200);
+
+  // Devices muncul satu per satu
+  devicesEl.forEach((d,i)=>{
+    setTimeout(()=>{ d.classList.add("show"); }, 1400 + i*200);
+  });
+
+  // Packet muncul setelah devices
+  packetsEl.forEach((p,i)=>{
+    setTimeout(()=>{ p.classList.add("show"); }, 2200 + i*300);
+  });
+
+  // Jalankan diagram animasi
+  updateLinks();
+  animatePackets();
+});
+</script>
+</body>
+</html>

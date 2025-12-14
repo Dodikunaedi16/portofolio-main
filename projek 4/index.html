@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cybersecurity Portfolio | Basic Threat Assessment</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+body{background:linear-gradient(180deg,#0b1220,#020617);color:#fff;overflow-x:hidden;}
+.container{max-width:1200px;margin:auto;padding:80px 20px}
+
+/* ================= HERO ================= */
+.hero{min-height:90vh;display:flex;align-items:center;opacity:0;transform:translateY(50px);transition:1s ease;}
+.hero.show{opacity:1;transform:translateY(0);}
+.hero-content{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}
+.hero-text h1{font-size:48px;line-height:1.2;margin-bottom:20px;opacity:0;transform:translateX(-30px);transition:1s ease;}
+.hero-text h1.show{opacity:1;transform:translateX(0);}
+.hero-text p{color:#cbd5e1;margin-bottom:34px;opacity:0;transform:translateX(-30px);transition:1s ease;}
+.hero-text p.show{opacity:1;transform:translateX(0);}
+.btn-primary{padding:14px 36px;border-radius:30px;background:linear-gradient(135deg,#38bdf8,#0ea5e9);color:#020617;font-weight:600;text-decoration:none;display:inline-block;opacity:0;transform:translateY(20px);transition:1s ease;}
+.btn-primary.show{opacity:1;transform:translateY(0);}
+.hero-image img{width:100%;height:520px;object-fit:cover;border-radius:30px;box-shadow:0 40px 90px rgba(0,0,0,.7);opacity:0;transform:scale(0.8);transition:1s ease;}
+.hero-image img.show{opacity:1;transform:scale(1);}
+
+/* ================= PROJECT ================= */
+.project{padding:120px 0;text-align:center;opacity:0;transform:translateY(50px);transition:1s ease;}
+.project.show{opacity:1;transform:translateY(0);}
+.project h2{font-size:40px;margin-bottom:16px}
+.subtitle{color:#94a3b8;margin-bottom:60px}
+
+.project-diagram{
+  position:relative;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:40px;
+}
+
+/* DEVICE */
+.device{
+  width:150px;
+  background:#020617;
+  border:1px solid rgba(56,189,248,.35);
+  border-radius:20px;
+  padding:20px;
+  text-align:center;
+  z-index:2;
+  position:relative;
+  opacity:0;
+  transform:scale(0.8);
+  transition:0.6s ease, opacity 0.6s ease;
+}
+.device.show{opacity:1;transform:scale(1);}
+.device::after{
+  content:"";
+  position:absolute;
+  inset:-5px;
+  border-radius:24px;
+  box-shadow:0 0 0 rgba(56,189,248,0);
+  transition:box-shadow .4s ease;
+  pointer-events:none;
+}
+.device.glow::after{
+  box-shadow:
+    0 0 20px rgba(56,189,248,.6),
+    0 0 40px rgba(14,165,233,.4);
+}
+.device span{display:block;margin-top:10px;font-size:14px;color:#cbd5e1}
+
+/* DEVICE ICON */
+.device .icon{
+  width:60px;
+  height:60px;
+  margin:0 auto 10px;
+  border-radius:8px;
+  position:relative;
+}
+
+/* LINK */
+.link{
+  position:absolute;
+  background:linear-gradient(90deg,#38bdf8,transparent,#38bdf8);
+  background-size:200% 100%;
+  animation:flow 2.5s linear infinite, pulse 1.5s ease-in-out infinite alternate;
+  z-index:1;
+}
+
+/* PACKET */
+.packet{
+  position:absolute;
+  width:10px;
+  height:10px;
+  background:#38bdf8;
+  border-radius:50%;
+  box-shadow:0 0 15px #38bdf8, 0 0 30px #0ea5e9;
+  transform:translate(-50%,-50%);
+  z-index:3;
+}
+
+/* ================= SCOPE ================= */
+.scope{padding:120px 0;text-align:center;opacity:0;transform:translateY(50px);transition:1s ease;}
+.scope.show{opacity:1;transform:translateY(0);}
+.scope h2{font-size:40px;margin-bottom:16px}
+
+.scope-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:30px;
+  margin-top:60px;
+}
+
+.scope-card{
+  display:flex;
+  gap:16px;
+  align-items:center;
+  background:#020617;
+  border:1px solid rgba(56,189,248,.3);
+  border-radius:20px;
+  padding:20px;
+  transition:.35s ease;
+  opacity:0;
+  transform:translateY(20px);
+}
+.scope-card.show{opacity:1;transform:translateY(0);}
+.scope-card:hover{transform:translateY(-6px);box-shadow:0 15px 40px rgba(56,189,248,.35);}
+.scope-card .icon{width:50px;height:50px;position:relative;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 0 5px #38bdf8);}
+
+/* FOOTER */
+footer{text-align:center;padding:30px;color:#94a3b8;opacity:0;transform:translateY(20px);transition:1s ease;}
+footer.show{opacity:1;transform:translateY(0);}
+
+/* ================= MOBILE ================= */
+@media(max-width:900px){
+  .hero-content{grid-template-columns:1fr;text-align:center}
+  .project-diagram{flex-direction:column}
+  .device{width:180px}
+  .scope-grid{grid-template-columns:1fr}
+}
+
+/* FLOW */
+@keyframes flow{from{background-position:0 0}to{background-position:200% 0}}
+@keyframes pulse{0%{opacity:0.5;}100%{opacity:1;}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-text">
+      <h1>Cybersecurity Portfolio<br><span>Basic Threat Assessment</span></h1>
+      <p>Melakukan analisis ancaman dasar, identifikasi risiko, dan penerapan langkah keamanan.</p>
+      <a href="#project" class="btn-primary">View Project</a>
+    </div>
+    <div class="hero-image">
+      <img src="images/image.png" alt="Cybersecurity">
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT -->
+<section id="project" class="project">
+  <h2>Cybersecurity Basic Threat Assessment</h2>
+  <p class="subtitle">Melakukan analisis ancaman dasar, identifikasi risiko, dan penerapan langkah keamanan.</p>
+
+  <div class="project-diagram topology-diagram">
+    <!-- LINKS -->
+    <div class="link"></div>
+    <div class="link"></div>
+    <div class="link"></div>
+
+    <!-- DEVICES -->
+    <div class="device" id="firewall">
+      <div class="icon firewall-icon"></div>
+      <span>Firewall</span>
+    </div>
+
+    <div class="device" id="server">
+      <div class="icon server-icon"></div>
+      <span>Server</span>
+    </div>
+
+    <div class="device" id="workstation">
+      <div class="icon workstation-icon"></div>
+      <span>Workstation</span>
+    </div>
+
+    <div class="device" id="router">
+      <div class="icon router-icon"></div>
+      <span>Router</span>
+    </div>
+
+    <!-- PACKETS -->
+    <div class="packet"></div>
+    <div class="packet"></div>
+  </div>
+</section>
+
+<style>
+/* ICON BASE */
+.project-diagram .icon {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 10px;
+  position: relative;
+  border-radius: 8px;
+}
+
+/* FIREWALL: kotak + gembok */
+.firewall-icon {
+  background: #f87171; /* merah */
+}
+.firewall-icon::after {
+  content: "🔒";
+  position: absolute;
+  font-size: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* SERVER: tumpukan kotak */
+.server-icon {
+  background: #60a5fa; /* biru */
+  border-radius: 4px;
+}
+.server-icon::before, .server-icon::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 14px;
+  background: #3b82f6;
+  top: 10px;
+  left: 0;
+  border-radius: 4px;
+}
+.server-icon::after {
+  top: 26px;
+}
+
+/* WORKSTATION: kotak + layar */
+.workstation-icon {
+  background: #34d399; /* hijau */
+  border-radius: 4px;
+}
+.workstation-icon::before {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 20px;
+  background: #065f46;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+/* ROUTER: lingkaran + antena */
+.router-icon {
+  background: #fbbf24; /* kuning */
+  border-radius: 50%;
+}
+.router-icon::before, .router-icon::after {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 12px;
+  background: #92400e;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.router-icon::after {
+  left: 25%;
+  transform: none;
+}
+</style>
+
+
+<!-- SCOPE -->
+<section class="scope">
+  <h2>Project Scope</h2>
+  <p class="subtitle">Ruang lingkup pekerjaan pada Cybersecurity Basic Threat Assessment.</p>
+  <div class="scope-grid">
+    <div class="scope-card"><div class="icon threat-icon"></div><div><h3>Threat Analysis</h3><p>Analisis ancaman dasar sistem dan jaringan.</p></div></div>
+    <div class="scope-card"><div class="icon risk-icon"></div><div><h3>Risk Identification</h3><p>Identifikasi potensi risiko keamanan.</p></div></div>
+    <div class="scope-card"><div class="icon security-icon"></div><div><h3>Security Measures</h3><p>Penerapan langkah keamanan dasar.</p></div></div>
+    <div class="scope-card"><div class="icon monitor-icon"></div><div><h3>Monitoring</h3><p>Pengawasan aktivitas jaringan.</p></div></div>
+    <div class="scope-card"><div class="icon report-icon"></div><div><h3>Documentation</h3><p>Pembuatan laporan dan dokumentasi.</p></div></div>
+    <div class="scope-card"><div class="icon awareness-icon"></div><div><h3>Awareness</h3><p>Pelatihan dasar untuk pengguna.</p></div></div>
+  </div>
+  <style>
+.scope-card {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  background: #020617;
+  border: 1px solid rgba(56,189,248,.3);
+  border-radius: 20px;
+  padding: 20px;
+  transition: 0.35s ease;
+}
+.scope-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 40px rgba(56,189,248,.35);
+}
+
+.scope-card .icon {
+  width: 50px;
+  height: 50px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 5px #38bdf8);
+}
+
+/* ================= Cybersecurity-themed Modern Icons ================= */
+
+/* Threat Analysis: lingkaran dengan garis diagonal neon */
+.threat-icon {
+  border: 2px solid #f87171;
+  border-radius: 50%;
+}
+.threat-icon::before {
+  content:"";
+  position:absolute;
+  width:2px;
+  height:28px;
+  background:#f87171;
+  transform: rotate(45deg);
+}
+
+/* Risk Identification: lingkaran dengan titik neon di tengah */
+.risk-icon {
+  border: 2px solid #fbbf24;
+  border-radius: 50%;
+}
+.risk-icon::before {
+  content:"";
+  position:absolute;
+  width:10px;
+  height:10px;
+  background:#fbbf24;
+  border-radius:50%;
+}
+
+/* Security Measures: kotak dengan garis horizontal neon */
+.security-icon {
+  border: 2px solid #60a5fa;
+  width: 40px;
+  height: 40px;
+  border-radius:6px;
+}
+.security-icon::before {
+  content:"";
+  position:absolute;
+  width:24px;
+  height:2px;
+  background:#60a5fa;
+}
+
+/* Monitoring: layar kotak dengan garis vertikal neon */
+.monitor-icon {
+  border: 2px solid #34d399;
+  width: 40px;
+  height: 30px;
+  border-radius:4px;
+}
+.monitor-icon::before {
+  content:"";
+  position:absolute;
+  width:2px;
+  height:16px;
+  background:#34d399;
+}
+
+/* Documentation: dokumen abstrak neon */
+.report-icon {
+  border: 2px solid #f472b6;
+  width: 30px;
+  height: 40px;
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 80% 100%, 0 100%);
+}
+
+/* Awareness: lingkaran dengan lingkaran kecil neon di atas */
+.awareness-icon {
+  border: 2px solid #a78bfa;
+  border-radius: 50%;
+}
+.awareness-icon::before {
+  content:"";
+  position:absolute;
+  width:12px;
+  height:12px;
+  border: 2px solid #a78bfa;
+  border-radius:50%;
+  top:-6px;
+}
+</style>
+
+</section>
+
+</div>
+<footer>© 2025 Cybersecurity Portfolio</footer>
+
+<script>
+const diagram = document.querySelector(".topology-diagram");
+const devices = [...document.querySelectorAll(".device")];
+const links = document.querySelectorAll(".link");
+const packets = document.querySelectorAll(".packet");
+let rafIds = [];
+
+/* ================= POSITION ================= */
+function center(el){return {x: el.offsetLeft + el.offsetWidth/2, y: el.offsetTop + el.offsetHeight/2};}
+
+/* ================= LINKS ================= */
+function updateLinks(){
+  const mobile = window.innerWidth <= 900;
+  links.forEach((l,i)=>{
+    const a=devices[i]; const b=devices[i+1]; if(!a||!b)return;
+    const A=center(a); const B=center(b);
+    if(mobile){l.style.left="50%";l.style.top=A.y+"px";l.style.width="2px";l.style.height=(B.y-A.y)+"px";l.style.transform="translateX(-50%)";}
+    else{l.style.left=A.x+"px";l.style.top=A.y+"px";l.style.width=(B.x-A.x)+"px";l.style.height="2px";l.style.transform="none";}
+  });
+}
+
+/* ================= PACKET FLOW ================= */
+function animatePackets(){
+  rafIds.forEach(id=>cancelAnimationFrame(id)); rafIds=[];
+  const mobile = window.innerWidth <= 900;
+  const points = devices.map(d=>center(d));
+  packets.forEach((packet,index)=>{
+    let seg = index===0?0:devices.length-1;
+    let dir = index===0?1:-1;
+    let t=0; const speed=0.008;
+    function move(){
+      const A=points[seg]; const B=points[seg+dir]; if(!B)return;
+      let x,y;
+      if(mobile){x=diagram.offsetWidth/2; y=A.y+(B.y-A.y)*t;}
+      else{x=A.x+(B.x-A.x)*t; y=A.y+Math.sin(t*Math.PI*2)*10;}
+      packet.style.left=x+"px"; packet.style.top=y+"px"; packet.style.transform="translate(-50%,-50%)";
+      devices.forEach(d=>d.classList.remove("glow")); if(t>=1) devices[seg+dir]?.classList.add("glow"); else devices[seg]?.classList.add("glow");
+      t+=speed;
+      if(t>=1){t=0; seg+=dir; if(seg===devices.length-1||seg===0) dir*=-1;}
+      rafIds.push(requestAnimationFrame(move));
+    }
+    move();
+  });
+}
+
+/* ================= FADE-IN SECTIONS ================= */
+function showSections(){
+  const hero=document.querySelector(".hero");
+  const heroText=hero.querySelector("h1");
+  const heroP=hero.querySelector("p");
+  const btn=hero.querySelector(".btn-primary");
+  const heroImg=hero.querySelector("img");
+  
+  setTimeout(()=>hero.classList.add("show"),300);
+  setTimeout(()=>heroText.classList.add("show"),600);
+  setTimeout(()=>heroP.classList.add("show"),900);
+  setTimeout(()=>btn.classList.add("show"),1200);
+  setTimeout(()=>heroImg.classList.add("show"),1400);
+  
+  const project=document.querySelector(".project");
+  setTimeout(()=>project.classList.add("show"),1800);
+  devices.forEach((d,i)=>setTimeout(()=>d.classList.add("show"),2000+i*200));
+  
+  const scopeCards=document.querySelectorAll(".scope-card");
+  const scopeSection=document.querySelector(".scope");
+  setTimeout(()=>scopeSection.classList.add("show"),2800);
+  scopeCards.forEach((c,i)=>setTimeout(()=>c.classList.add("show"),3000+i*150));
+  
+  const footer=document.querySelector("footer");
+  setTimeout(()=>footer.classList.add("show"),4000);
+}
+
+/* ================= INIT ================= */
+function init(){updateLinks(); animatePackets(); showSections();}
+window.addEventListener("load",init);
+window.addEventListener("resize",()=>{updateLinks(); animatePackets();});
+</script>
+</body>
+</html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Juniper Network Administration | Portfolio</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        color: #eaeaea;
+        background: #0b0d10;
+      }
+
+      /* ===== HERO BACKGROUND ===== */
+      .hero {
+        min-height: 100vh;
+        background: linear-gradient(
+            120deg,
+            rgba(11, 13, 16, 0.95) 0%,
+            rgba(11, 13, 16, 0.75) 40%,
+            rgba(11, 13, 16, 0.4) 100%
+          ),
+          url("images/dodi.png") center/cover no-repeat;
+        display: flex;
+        flex-direction: column;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 28px 64px;
+      }
+
+      header h1 {
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+
+      nav a {
+        margin-left: 28px;
+        text-decoration: none;
+        color: #b5b5b5;
+        font-size: 14px;
+      }
+
+      nav a:hover {
+        color: #5bbcff;
+      }
+
+      /* ===== HERO CONTENT ===== */
+      .hero-content {
+        flex: 1;
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        align-items: center;
+        padding: 0 64px;
+      }
+
+      .hero-text h2 {
+        font-size: 48px;
+        line-height: 1.15;
+        margin-bottom: 20px;
+      }
+
+      .hero-text span {
+        color: #5bbcff;
+      }
+
+      .hero-text p {
+        max-width: 520px;
+        color: #c9c9c9;
+        margin-bottom: 36px;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 14px 34px;
+        border-radius: 40px;
+        background: #5bbcff;
+        color: #000;
+        font-weight: 600;
+        text-decoration: none;
+        transition: 0.3s;
+      }
+
+      .btn:hover {
+        background: #89d0ff;
+      }
+
+      /* ===== SERVICES ===== */
+      .services {
+        background: rgba(15, 18, 24, 0.9);
+        padding: 60px 64px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 28px;
+      }
+
+      .service-box {
+        background: #12151c;
+        padding: 28px;
+        border-radius: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: 0.3s;
+      }
+
+      .service-box:hover {
+        transform: translateY(-6px);
+        border-color: #5bbcff;
+      }
+
+      .service-box h4 {
+        margin-bottom: 12px;
+        color: #fff;
+        font-size: 16px;
+      }
+
+      .service-box p {
+        font-size: 14px;
+        color: #bfbfbf;
+      }
+
+      footer {
+        padding: 28px;
+        text-align: center;
+        font-size: 13px;
+        color: #888;
+        background: #0b0d10;
+      }
+
+      /* ===== RESPONSIVE ===== */
+      @media (max-width: 900px) {
+        .hero-content {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+        .hero-text p {
+          margin: 0 auto 36px;
+        }
+        .services {
+          grid-template-columns: 1fr;
+        }
+        header {
+          padding: 20px 32px;
+        }
+        .hero-content,
+        .services {
+          padding: 40px 32px;
+        }
+      }
+      /* ===== MOBILE FIX ===== */
+      @media (max-width: 600px) {
+        .hero {
+          min-height: 100svh;
+          background-position: center top;
+        }
+        @media (max-width: 768px) {
+          .hero {
+            background-position: center 25%;
+          }
+        }
+
+        .hero-content {
+          padding: 24px 20px;
+          justify-content: center;
+        }
+
+        .hero-text h2 {
+          font-size: 32px;
+          line-height: 1.2;
+        }
+
+        .hero-text p {
+          font-size: 14px;
+          line-height: 1.6;
+          margin-bottom: 28px;
+        }
+
+        .btn {
+          padding: 12px 28px;
+          font-size: 14px;
+        }
+
+        /* Animasi lebih smooth di HP */
+        .hero-text {
+          animation: fadeUp 0.8s ease forwards;
+        }
+
+        @keyframes fadeUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      }
+
+      /* ===== ANIMATIONS ===== */
+      @keyframes fadeLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes zoomBg {
+        from {
+          background-size: 110%;
+        }
+        to {
+          background-size: 100%;
+        }
+      }
+
+      /* Hero animation */
+      .hero {
+        animation: zoomBg 1.6s ease forwards;
+      }
+
+      .hero-text {
+        opacity: 0;
+        animation: fadeLeft 1s ease forwards;
+        animation-delay: 0.4s;
+      }
+
+      /* Scroll reveal */
+      .service-box {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: 0.6s ease;
+      }
+
+      .service-box.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body>
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h2>
+            Juniper<br />
+            <span>Network Administration Portfolio</span>
+          </h2>
+          <p>
+            Portofolio pembelajaran dan praktik administrasi jaringan berbasis
+            Juniper Networks, mencakup konfigurasi, routing, switching, dan
+            keamanan jaringan sebagai fondasi karier Network Engineer.
+          </p>
+          <a href="#services" class="btn">Explore Portfolio</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="services">
+      <div class="service-box">
+        <h4>Juniper Network Configuration</h4>
+        <p>
+          Pengalaman konfigurasi dasar hingga menengah perangkat Juniper
+          (router, switch, firewall) menggunakan Junos OS, mencakup interface,
+          system services, dan initial setup.
+        </p>
+      </div>
+
+      <div class="service-box">
+        <h4>Routing & Switching Implementation</h4>
+        <p>
+          Praktik implementasi routing dan switching berbasis Juniper, termasuk
+          VLAN, OSPF, BGP dasar, dan konsep switching jaringan enterprise.
+        </p>
+      </div>
+
+      <div class="service-box">
+        <h4>Network Security & Firewall Basics</h4>
+        <p>
+          Penerapan konsep keamanan jaringan menggunakan Juniper SRX, meliputi
+          firewall policy, NAT, VPN dasar (IPSec), serta security best
+          practices.
+        </p>
+      </div>
+
+      <div class="service-box">
+        <h4>Monitoring & Troubleshooting</h4>
+        <p>
+          Pengalaman pemantauan jaringan, analisis log Junos, dan
+          troubleshooting untuk mengidentifikasi serta menyelesaikan masalah
+          jaringan dasar.
+        </p>
+      </div>
+
+      <div class="service-box">
+        <h4>Network Optimization & Design</h4>
+        <p>
+          Pemahaman optimasi performa jaringan, perencanaan bandwidth, serta
+          konsep redundansi dan high availability dalam desain jaringan.
+        </p>
+      </div>
+
+      <div class="service-box">
+        <h4>Network Documentation & Technical Support</h4>
+        <p>
+          Pembuatan dokumentasi jaringan, diagram topologi, dan catatan
+          konfigurasi sebagai bagian dari praktik administrasi jaringan yang
+          terstruktur.
+        </p>
+      </div>
+    </section>
+
+    <footer></footer>
+  </body>
+  <script>
+    const boxes = document.querySelectorAll(".service-box");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    boxes.forEach((box) => observer.observe(box));
+  </script>
+</html>

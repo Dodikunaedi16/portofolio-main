@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Junior Network Setup | Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+body{background:linear-gradient(180deg,#0b1220,#020617);color:#fff;overflow-x:hidden;}
+.container{max-width:1200px;margin:auto;padding:80px 20px}
+
+/* ================= HERO ================= */
+.hero{min-height:90vh;display:flex;align-items:center;opacity:0;transform:translateY(50px);transition:1s ease;}
+.hero.show{opacity:1;transform:translateY(0);}
+.hero-content{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}
+.hero-text h1{font-size:48px;line-height:1.2;margin-bottom:20px;opacity:0;transform:translateX(-30px);transition:1s ease;}
+.hero-text h1.show{opacity:1;transform:translateX(0);}
+.hero-text p{color:#cbd5e1;margin-bottom:34px;opacity:0;transform:translateX(-30px);transition:1s ease;}
+.hero-text p.show{opacity:1;transform:translateX(0);}
+.btn-primary{padding:14px 36px;border-radius:30px;background:linear-gradient(135deg,#38bdf8,#0ea5e9);color:#020617;font-weight:600;text-decoration:none;display:inline-block;opacity:0;transform:translateY(20px);transition:1s ease;}
+.btn-primary.show{opacity:1;transform:translateY(0);}
+.hero-image img{width:100%;height:520px;object-fit:cover;border-radius:30px;box-shadow:0 40px 90px rgba(0,0,0,.7);opacity:0;transform:scale(0.8);transition:1s ease;}
+.hero-image img.show{opacity:1;transform:scale(1);}
+
+/* ================= PROJECT ================= */
+.project{padding:120px 0;text-align:center;opacity:0;transform:translateY(50px);transition:1s ease;}
+.project.show{opacity:1;transform:translateY(0);}
+.project h2{font-size:40px;margin-bottom:16px}
+.subtitle{color:#94a3b8;margin-bottom:60px}
+
+.project-diagram{
+  position:relative;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:40px;
+}
+
+/* DEVICE */
+.device{
+  width:180px;
+  background:#020617;
+  border:1px solid rgba(56,189,248,.35);
+  border-radius:20px;
+  padding:24px;
+  text-align:center;
+  z-index:2;
+  position:relative;
+  opacity:0;
+  transform:scale(0.8);
+  transition:0.6s ease, opacity 0.6s ease;
+}
+.device.show{
+  opacity:1;
+  transform:scale(1);
+}
+
+.device::after{
+  content:"";
+  position:absolute;
+  inset:-5px;
+  border-radius:24px;
+  box-shadow:0 0 0 rgba(56,189,248,0);
+  transition:box-shadow .4s ease;
+  pointer-events:none;
+}
+.device.glow::after{
+  box-shadow:
+    0 0 20px rgba(56,189,248,.6),
+    0 0 40px rgba(14,165,233,.4);
+}
+.device span{display:block;margin-top:10px;font-size:14px;color:#cbd5e1}
+
+/* DEVICE ICON */
+.device .icon{
+  font-size:36px;
+  margin-bottom:10px;
+  color:#38bdf8;
+}
+
+/* LINK */
+.link{
+  position:absolute;
+  background:linear-gradient(90deg,#38bdf8,transparent,#38bdf8);
+  background-size:200% 100%;
+  animation:flow 2.5s linear infinite, pulse 1.5s ease-in-out infinite alternate;
+  z-index:1;
+}
+
+/* PACKET */
+.packet{
+  position:absolute;
+  width:10px;
+  height:10px;
+  background:#38bdf8;
+  border-radius:50%;
+  box-shadow:0 0 15px #38bdf8, 0 0 30px #0ea5e9;
+  transform:translate(-50%,-50%);
+  z-index:3;
+}
+
+/* ================= SCOPE ================= */
+.scope{padding:120px 0;text-align:center;opacity:0;transform:translateY(50px);transition:1s ease;}
+.scope.show{opacity:1;transform:translateY(0);}
+.scope h2{font-size:40px;margin-bottom:16px}
+
+.scope-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:30px;
+  margin-top:60px;
+}
+
+.scope-card{
+  background:#020617;
+  border:1px solid rgba(56,189,248,.3);
+  border-radius:20px;
+  padding:30px;
+  transition:.35s ease;
+  opacity:0;
+  transform:translateY(20px);
+}
+.scope-card.show{
+  opacity:1;
+  transform:translateY(0);
+}
+.scope-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 20px 50px rgba(56,189,248,.35);
+}
+.scope-card h3{color:#38bdf8;margin-bottom:12px;font-size:18px}
+.scope-card p{color:#cbd5e1;font-size:14px;line-height:1.7}
+.scope-card .icon{font-size:36px;color:#38bdf8;margin-bottom:12px}
+
+/* FOOTER */
+footer{text-align:center;padding:30px;color:#94a3b8;opacity:0;transform:translateY(20px);transition:1s ease;}
+footer.show{opacity:1;transform:translateY(0);}
+
+/* ================= MOBILE ================= */
+@media(max-width:900px){
+  .hero-content{grid-template-columns:1fr;text-align:center}
+  .project-diagram{flex-direction:column;gap:50px}
+  .device{width:220px}
+  .scope-grid{grid-template-columns:1fr}
+}
+
+/* FLOW */
+@keyframes flow{
+  from{background-position:0 0}
+  to{background-position:200% 0}
+}
+
+@keyframes pulse{
+  0% {opacity:0.5;}
+  100% {opacity:1;}
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-text">
+      <h1>Junior Network Setup<br><span>Junos OS Project</span></h1>
+      <p>Penerapan konfigurasi dasar Juniper, routing, security, dan troubleshooting.</p>
+      <a href="#project" class="btn-primary">View Project</a>
+    </div>
+    <div class="hero-image">
+      <img src="images/image.png" alt="Network Image">
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT -->
+<section id="project" class="project">
+  <h2>Junior Network Topology</h2>
+  <p class="subtitle">Diagram topologi jaringan menggunakan Junos OS.</p>
+
+  <div class="project-diagram topology-diagram">
+    <div class="link"></div>
+    <div class="link"></div>
+    <div class="link"></div>
+
+    <div class="device" id="firewall">
+      <div class="icon"><i class="fas fa-fire"></i></div>
+      <span>SRX Firewall</span>
+    </div>
+
+    <div class="device" id="router">
+      <div class="icon"><i class="fas fa-network-wired"></i></div>
+      <span>MX Core Router</span>
+    </div>
+
+    <div class="device" id="switch">
+      <div class="icon"><i class="fas fa-server"></i></div>
+      <span>EX Switch</span>
+    </div>
+
+    <div class="device" id="pc">
+      <div class="icon"><i class="fas fa-desktop"></i></div>
+      <span>LAN Devices</span>
+    </div>
+
+    <div class="packet"></div>
+    <div class="packet"></div>
+  </div>
+</section>
+
+<!-- SCOPE -->
+<section class="scope">
+  <h2>Project Scope</h2>
+  <p class="subtitle">Ruang lingkup pekerjaan pada Junior Network Setup.</p>
+
+  <div class="scope-grid">
+    <div class="scope-card">
+      <div class="icon"><i class="fas fa-project-diagram"></i></div>
+      <h3>Network Design</h3>
+      <p>Perancangan topologi jaringan.</p>
+    </div>
+
+    <div class="scope-card">
+      <div class="icon"><i class="fas fa-plug"></i></div>
+      <h3>Interface Config</h3>
+      <p>Konfigurasi interface Junos OS.</p>
+    </div>
+
+    <div class="scope-card">
+      <div class="icon"><i class="fas fa-route"></i></div>
+      <h3>Routing</h3>
+      <p>Implementasi routing dasar.</p>
+    </div>
+
+    <div class="scope-card">
+      <div class="icon"><i class="fas fa-shield-alt"></i></div>
+      <h3>Security</h3>
+      <p>Firewall & filtering traffic.</p>
+    </div>
+
+    <div class="scope-card">
+      <div class="icon"><i class="fas fa-tools"></i></div>
+      <h3>Troubleshooting</h3>
+      <p>Analisa & perbaikan jaringan.</p>
+    </div>
+
+    <div class="scope-card">
+      <div class="icon"><i class="fas fa-file-alt"></i></div>
+      <h3>Documentation</h3>
+      <p>Dokumentasi konfigurasi.</p>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer>© 2025 Juniper Network Setup Portfolio</footer>
+
+<script>
+const diagram = document.querySelector(".topology-diagram");
+const devices = [
+  document.getElementById("firewall"),
+  document.getElementById("router"),
+  document.getElementById("switch"),
+  document.getElementById("pc")
+];
+const packets = document.querySelectorAll(".packet");
+const links   = document.querySelectorAll(".link");
+let rafIds = [];
+
+/* ================= HELPER ================= */
+function center(el){
+  return {
+    x: el.offsetLeft + el.offsetWidth / 2,
+    y: el.offsetTop  + el.offsetHeight / 2
+  };
+}
+
+/* ================= LINKS ================= */
+function updateLinks(){
+  const mobile = window.innerWidth <= 900;
+  links.forEach((l,i)=>{
+    const a = devices[i];
+    const b = devices[i+1];
+    if(!a || !b) return;
+    const A = center(a);
+    const B = center(b);
+    if(mobile){
+      l.style.left = "50%";
+      l.style.top = A.y + "px";
+      l.style.width = "2px";
+      l.style.height = (B.y - A.y) + "px";
+      l.style.transform = "translateX(-50%)";
+    } else {
+      l.style.left = A.x + "px";
+      l.style.top  = A.y + "px";
+      l.style.width = (B.x - A.x) + "px";
+      l.style.height = "2px";
+      l.style.transform = "none";
+    }
+  });
+}
+
+/* ================= PACKET FLOW ================= */
+function animatePackets(){
+  rafIds.forEach(id => cancelAnimationFrame(id));
+  rafIds = [];
+  const mobile = window.innerWidth <= 900;
+  const points = devices.map(d=>center(d));
+  packets.forEach((packet, index)=>{
+    let seg = 0;
+    let dir = 1;
+    let t = index * 0.3;
+    const speed = 0.008;
+    function move(){
+      const A = points[seg];
+      const B = points[seg + dir];
+      if(!B) return;
+      let x, y;
+      if(mobile){
+        x = diagram.offsetWidth / 2;
+        y = A.y + (B.y - A.y) * t;
+      } else {
+        x = A.x + (B.x - A.x) * t;
+        y = A.y + (Math.sin(t*Math.PI*2)*10); // zig-zag
+      }
+      packet.style.left = x + "px";
+      packet.style.top  = y + "px";
+      packet.style.transform = "translate(-50%, -50%)";
+      t += speed;
+      if(t >= 1){
+        t = 0;
+        seg += dir;
+        devices[seg]?.classList.add("glow");
+        setTimeout(()=>devices[seg]?.classList.remove("glow"), 200);
+        if(seg === devices.length - 1 || seg === 0) dir*=-1;
+      }
+      rafIds.push(requestAnimationFrame(move));
+    }
+    move();
+  });
+}
+
+/* ================= FADE-IN SECTIONS ================= */
+function showSections(){
+  const hero = document.querySelector(".hero");
+  const heroText = hero.querySelector("h1");
+  const heroP = hero.querySelector("p");
+  const btn = hero.querySelector(".btn-primary");
+  const heroImg = hero.querySelector("img");
+  
+  setTimeout(()=>hero.classList.add("show"), 300);
+  setTimeout(()=>heroText.classList.add("show"), 600);
+  setTimeout(()=>heroP.classList.add("show"), 900);
+  setTimeout(()=>btn.classList.add("show"), 1200);
+  setTimeout(()=>heroImg.classList.add("show"), 1400);
+  
+  const project = document.querySelector(".project");
+  setTimeout(()=>project.classList.add("show"), 1800);
+  
+  devices.forEach((d,i)=>{
+    setTimeout(()=>d.classList.add("show"), 2000 + i*200);
+  });
+  
+  const scopeCards = document.querySelectorAll(".scope-card");
+  const scopeSection = document.querySelector(".scope");
+  setTimeout(()=>scopeSection.classList.add("show"), 2800);
+  scopeCards.forEach((c,i)=>{
+    setTimeout(()=>c.classList.add("show"), 3000 + i*150);
+  });
+  
+  const footer = document.querySelector("footer");
+  setTimeout(()=>footer.classList.add("show"), 4000);
+}
+
+/* ================= INIT ================= */
+function init(){
+  updateLinks();
+  animatePackets();
+  showSections();
+}
+
+window.addEventListener("load", init);
+window.addEventListener("resize", init);
+</script>
+</body>
+</html>
